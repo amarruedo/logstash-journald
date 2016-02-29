@@ -8,11 +8,11 @@ gem:
 	docker run -v "$(shell pwd)":/context --rm logstash-journald-gem:latest bash -c 'mv logstash-input-journald.gem /context/logstash-input-journald.gem'
 
 build: gem
-	docker build -f Dockerfile -t state/logstash-journald:$(TAG) .
+	docker build -f Dockerfile -t amarruedo/logstash-journald:$(TAG) .
 
 tags: build
-	docker tag -f state/logstash-journald:$(TAG) state/logstash-journald:$(BASE)
+	docker tag -f amarruedo/logstash-journald:$(TAG) amarruedo/logstash-journald:$(BASE)
 
 push: tags
-	docker push state/logstash-journald:$(TAG)
-	docker push state/logstash-journald:$(BASE)
+	docker push amarruedo/logstash-journald:$(TAG)
+	docker push amarruedo/logstash-journald:$(BASE)
