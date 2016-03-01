@@ -7,7 +7,7 @@ This uses the [official Logstash
 repo](https://registry.hub.docker.com/_/logstash/) as its base. Currently it
 comes with version 1.5.2. It then installs the
 [logstash-input-journald](https://github.com/stuart-warren/logstash-input-journald)
-plugin.
+plugin and [logstash-output-loggly](https://github.com/logstash-plugins/logstash-output-loggly).
 
 Note that the `logstash` process runs as `root`, so it can access the journal.
 
@@ -21,8 +21,8 @@ the `/var/log/journal` directory as a read-only volume:
 docker run \
   --rm \
   -v /var/log/journal:/var/log/journal:ro \
-  state/logstash-journald:1.5.2 \
-  logstash -e 'input { journald { } } output { stdout { codec => rubydebug } }'
+  quay.io/amarruedo/logstash-journald \
+  logstash -e 'input { journald { } } output { loggly { key => \"YOUR_LOGGLY_KEY\" tag => \"logstash\" host => \"logs-01.loggly.com\" proto => \"https\" } }'
 ```
 
 See
